@@ -29,14 +29,10 @@ function! s:CdFile(cmd, ...)
         let l:file = a:1
     endif
 
-    let l:file_expand = expand(l:file)
-    if isdirectory(l:file_expand)
-        exec a:cmd . ' ' . l:file_expand
-        echo a:cmd . " to " . l:file_expand
-    elseif filereadable(l:file_expand)
-        let l:file_path = fnamemodify(l:file_expand, ":p:h")
-        exec a:cmd . ' ' . l:file_path
-        echo a:cmd . " to "  . l:file_path
+    let l:path = file#ExecFilePath(a:cmd, l:file)
+    if l:path != ''
+        echo a:cmd . " to " . l:path
     endif
+
 endfunction
 " }}}
